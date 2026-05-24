@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
@@ -21,11 +21,11 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
           env:
-            {{- range $key, $alue := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $alue | quote }}
-            {{- end }}
-          {{- if .Values.resources }}
+            - name: APP_STORE
+              value: {{ .Values.env.APP_STORE | quote }}
+            - name: APP_REDIS_URL
+              value: {{ .Values.env.APP_REDIS_URL | quote }}
+          {{- if .Values.resources.requests }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}
