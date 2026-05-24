@@ -1,0 +1,22 @@
+﻿apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: course-app
+  namespace: staging
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: ./charts/course-app
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    ingress:
+      enabled: true
+      host: app.staging.local
+    resources: {}
+    autoscaling:
+      enabled: false
